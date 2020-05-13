@@ -17,6 +17,9 @@ const { boardEvents, columnEvents, cardEvents } = require("./events");
 const { getPath, getImg } = require("./utils");
 const { clean } = require("./storageCleanUp");
 
+// eslint-disable-next-line
+const { mongoose } = require("./db/mongoose");
+
 const publicFolderPath = path.resolve(__dirname, "../public");
 const storageFolderPath = path.resolve(__dirname, "../storage");
 const port = process.env.PORT;
