@@ -1,7 +1,16 @@
 version: "3.7"
 
 services:
-  retro-backend:
+  mongo:
+    image: mongo
+    container_name: retro-mongo
+    ports: 
+      - "27018:27017"
+    networks: 
+      - dev
+    privileged: true
+
+  backend:
     build: ./backend/
     image: retro-backend
     container_name: retro-backend
@@ -11,11 +20,11 @@ services:
       - "3001:3001"
     networks:
       - dev
-    restart: on-failure
+    restart: always
     environment:
       - NODE_ENV=DEVELOPMENT
 
-  retro-frontend:
+  frontend:
     build: ./frontend/
     image: retro-frontend
     container_name: retro-frontend
@@ -25,7 +34,7 @@ services:
       - "3000:3000"
     networks:
       - dev
-    restart: on-failure
+    restart: always
     environment:
       - NODE_ENV=DEVELOPMENT
       - DEV_ENV=DOCKER
