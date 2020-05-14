@@ -4,6 +4,7 @@ const chalk = require("chalk");
 mongoose.connect("mongodb://localhost:27018/Retro", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 });
 
 const connection = mongoose.connection;

@@ -12,13 +12,37 @@ const {
   processBoard,
   respondWithInvalidBoardId,
 } = require("../utils");
+const { Board } = require("../models/board.model");
 
 const width = 1920;
 const height = 1080;
 
+/*
+{
+  boardId: 'A5YFxiIlTBFy3injhESjy',
+  title: 'test',
+  format: '',
+  items: {},
+  columns: {},
+  columnOrder: [],
+  error: false,
+  isBlurred: true,
+  maxVoteCount: 3,
+  showContinueDiscussion: false,
+  continueDiscussionVotes: { yes: 0, no: 0, abstain: 0 }
+}
+*/
 router.post("/", async (req, res) => {
-  const board = req.body;
-  const processedBoard = processBoard(board);
+  try {
+    const body = processBoard(req.body);
+    const board = new Board(body);
+    await board.save();
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).send({ errorMsg: "Board creation went wrong" });
+  }
+
+  /*
   try {
     fs.writeFile(
       getPath(processedBoard.boardId),
@@ -33,6 +57,7 @@ router.post("/", async (req, res) => {
   } catch (error) {
     res.status(400).send({ errorMsg: "Board creation went wrong." });
   }
+  */
 });
 
 router.get("/validate/:boardId", async (req, res) => {
