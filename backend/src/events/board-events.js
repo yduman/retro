@@ -1,5 +1,6 @@
 const fs = require("fs");
 
+const { Board } = require("../models/board.model");
 const { getPath, getBoard, stringify, logError } = require("../utils");
 const {
   UPDATE_BOARD,
@@ -18,19 +19,13 @@ const {
 const UTF8 = "utf8";
 
 const joinBoard = (io, client) => {
-  client.on(JOIN_BOARD, (boardId) => {
-    fs.readFile(getPath(boardId), UTF8, (error, file) => {
-      if (error) {
-        client.emit(JOIN_ERROR);
-      } else {
-        const board = getBoard(file);
-        if (board === null) {
-          client.emit(BOARD_ERROR);
-        } else {
-          client.emit(JOIN_BOARD, board);
-        }
-      }
-    });
+  client.on(JOIN_BOARD, async (boardId) => {
+    try {
+      const board = await Board.findByBoardId(boardId);
+      client.emit(JOIN_BOARD, board);
+    } catch (error) {
+      client.emit(JOIN_ERROR);
+    }
   });
 };
 

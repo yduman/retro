@@ -69,6 +69,7 @@ function CreateBoardDialog(props) {
     return null;
   }
 
+  // TODO: handle else case
   function navigateToBoard(response, boardId) {
     if (response.ok) {
       history.push({

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const BoardSchema = new mongoose.Schema({
+let BoardSchema = new mongoose.Schema({
   boardId: {
     type: String,
     required: true,
@@ -16,7 +16,6 @@ const BoardSchema = new mongoose.Schema({
       id: {
         type: String,
         required: true,
-        unique: true,
       },
       author: {
         type: String,
@@ -38,7 +37,6 @@ const BoardSchema = new mongoose.Schema({
       id: {
         type: String,
         required: true,
-        unique: true,
       },
       columnTitle: {
         type: String,
@@ -58,6 +56,20 @@ const BoardSchema = new mongoose.Schema({
     abstain: Number,
   },
 });
+
+BoardSchema.statics.findByBoardId = function (boardId) {
+  let Board = this;
+  return Board.findOne({ boardId }).then((board) => {
+    if (!board) {
+      return Promise.reject(
+        new Error(`Could not find board by the provided ID=${boardId}"`)
+      );
+    }
+    return new Promise((resolve) => {
+      resolve(board);
+    });
+  });
+};
 
 const Board = mongoose.model("Board", BoardSchema);
 module.exports = { Board };
