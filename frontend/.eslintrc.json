@@ -1,10 +1,10 @@
 {
   "extends": [
     "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:import/errors",
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
-    "plugin:cypress/recommended",
     "prettier",
     "prettier/react"
   ],
@@ -13,10 +13,12 @@
     "no-console": 0,
     "jsx-a11y/label-has-for": 0,
     "jsx-a11y/no-autofocus": 0,
-    "react/display-name": 0
+    "react/display-name": 0,
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "@typescript-eslint/no-explicit-any": 0
   },
-  "plugins": ["react", "import", "jsx-a11y", "cypress"],
-  "parser": "babel-eslint",
+  "plugins": ["react", "import", "jsx-a11y"],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module",
@@ -28,12 +30,16 @@
     "es6": true,
     "browser": true,
     "jest": true,
-    "node": true,
-    "cypress/globals": true
+    "node": true
   },
   "settings": {
     "react": {
       "version": "latest"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
     }
   }
 }

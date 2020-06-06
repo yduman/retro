@@ -2,21 +2,22 @@
 
 ![CircleCI (all branches)](https://img.shields.io/circleci/project/github/yduman/retro.svg?style=flat-square) ![GitHub release](https://img.shields.io/github/release/yduman/retro.svg?style=flat-square) ![GitHub](https://img.shields.io/github/license/yduman/retro.svg?style=flat-square) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
+![demo](./assets/retro.png)
+
+## Table of Contents
+
+- [What is Retro?](#what-is-retro)
+- [Usage Locally](#usage-locally)
+- [Branching](#branching)
+- [Deployment Examples](#deployment-examples)
+  - [PM2](#pm2)
+  - [Docker](#docker)
+- [Contributing](#contributing)
+- [Project State](#project-state)
+
+## What is Retro?
+
 Retro is a tool that you can use for your retrospectives. The goal of Retro is to aid teams in remote retrospectives.
-
-![demo](./assets/retro-demo.png)
-
-- [Retro - Make Retrospectives Great Again](#retro---make-retrospectives-great-again)
-  - [Intent](#intent)
-  - [Usage Locally](#usage-locally)
-  - [Branching](#branching)
-  - [Deployment Examples](#deployment-examples)
-    - [PM2](#pm2)
-    - [Docker](#docker)
-  - [Contributing](#contributing)
-  - [Project State](#project-state)
-
-## Intent
 
 At work, we were using third party retrospective tools, which meant we couldn't express ourselves freely because of privacy reasons. Retro provides an open-source solution, where you can host the app on your own servers, so you can discuss freely again, since you own the data!
 

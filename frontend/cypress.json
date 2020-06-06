@@ -1,9 +1,0 @@
-{
-  "baseUrl": "http://localhost:3000",
-  "testFiles": "**/*.spec.js",
-  "video": false,
-  "pluginsFile": false,
-  "fixturesFolder": false,
-  "viewportWidth": 1920,
-  "viewportHeight": 1080
-}

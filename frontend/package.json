@@ -1,78 +1,69 @@
 {
-  "name": "@retro/frontend",
-  "description": "The React frontend of Retro. Make retrospectives great again.",
-  "author": {
-    "name": "Yadullah Duman",
-    "url": "https://yduman.github.io"
-  },
-  "bugs": {
-    "url": "https://github.com/yduman/retro/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/yduman/retro.git",
-    "directory": "frontend/"
-  },
-  "license": "MIT",
-  "version": "0.3.0",
+  "name": "ts-frontend",
+  "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "build:prod": "env-cmd -f .env.production.local yarn build",
-    "deploy:frontend": "cp -a build/. ../backend/public/",
-    "deploy": "run-s -l -n build:prod deploy:frontend",
-    "test": "react-scripts test --env=jsdom",
-    "test:cov": "react-scripts test --env=jsdom --coverage --watchAll=false",
-    "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
-    "lint:cypress": "eslint \"cypress/**/*.js\" --quiet",
-    "format": "prettier --write \"src/**/*.{js,jsx,css,json}\"",
-    "format:cypress": "prettier --write \"cypress/**/*.{js}\"",
-    "format:check": "prettier --list-different \"src/**/*.{js,jsx,css,json}\"",
-    "cy:open": "cypress open",
-    "test:e2e": "cypress run",
-    "eject": "react-scripts eject"
-  },
   "dependencies": {
-    "@material-ui/core": "^4.9.11",
+    "@material-ui/core": "^4.10.1",
     "@material-ui/icons": "^4.9.1",
-    "http-proxy-middleware": "^1.0.3",
+    "http-proxy-middleware": "^1.0.4",
     "lodash": "^4.17.15",
-    "nanoid": "^3.1.3",
+    "material-ui-dropzone": "^3.0.0",
+    "nanoid": "^3.1.9",
     "qrcode": "^1.4.4",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.1.2",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "recompose": "^0.30.0",
     "socket.io-client": "^2.3.0",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.1"
   },
   "devDependencies": {
-    "@testing-library/cypress": "^6.0.0",
-    "babel-eslint": "^10.1.0",
-    "cypress": "^4.4.1",
+    "@testing-library/jest-dom": "^5.9.0",
+    "@testing-library/react": "^10.2.1",
+    "@testing-library/user-event": "^11.2.1",
+    "@types/jest": "^25.2.3",
+    "@types/lodash": "^4.14.155",
+    "@types/nanoid": "^2.1.0",
+    "@types/node": "^14.0.11",
+    "@types/qrcode": "^1.3.4",
+    "@types/react": "^16.9.35",
+    "@types/react-beautiful-dnd": "^13.0.0",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/socket.io-client": "^1.4.33",
+    "@types/styled-components": "^5.1.0",
+    "@typescript-eslint/eslint-plugin": "^3.1.0",
+    "@typescript-eslint/parser": "^3.1.0",
     "env-cmd": "^10.1.0",
-    "eslint": "^6.8.0",
+    "eslint": "^7.2.0",
     "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-cypress": "^2.10.3",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react": "^7.20.0",
     "husky": "^4.2.5",
-    "lint-staged": "^10.1.7",
+    "lint-staged": "^10.2.9",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "typescript": "~3.9.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "build:prod": "env-cmd -f .env.production.local yarn build",
+    "deploy": "run-s -l -n build:prod deploy:frontend",
+    "deploy:frontend": "cp -a build/. ../backend/public/",
+    "test": "react-scripts test",
+    "test:cov": "react-scripts test --env=jsdom --coverage --watchAll=false",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" --quiet",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,html,css,json}\"",
+    "format:check": "prettier --list-different \"src/**/*.{js,jsx,ts,tsx,html,css,json}\"",
+    "eject": "react-scripts eject"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx}": [
+    "src/**/*.{ts,tsx}": [
       "yarn lint",
       "yarn format"
-    ],
-    "cypress/**/*.js": [
-      "yarn lint:cypress",
-      "yarn format:cypress"
     ]
   },
   "husky": {

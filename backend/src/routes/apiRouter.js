@@ -6,6 +6,7 @@ const chalk = require("chalk");
 
 const router = express.Router();
 const {
+  getBoard,
   getPath,
   getImg,
   stringify,
@@ -16,6 +17,12 @@ const { Board } = require("../models/board.model");
 
 const width = 1920;
 const height = 1080;
+
+function getBoardWithoutId(boardData) {
+  const board = getBoard(boardData);
+  board.boardId = "";
+  return stringify(board);
+}
 
 router.post("/", async (req, res) => {
   try {
@@ -29,6 +36,36 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/template-import", async (req, res) => {
+  const board = req.body;
+  const boardId = board.boardId;
+  try {
+    fs.writeFile(getPath(boardId), stringify(board), "utf8", (error) => {
+      if (error)
+        res.status(400).send({ errorMsg: "Board creation went wrong." });
+      res.status(200).send({ boardId: boardId });
+    });
+  } catch (error) {
+    res.status(400).send({ errorMsg: "Board creation went wrong." });
+  }
+});
+
+router.get("/template-export/:boardId", async (req, res) => {
+  const boardId = req.params.boardId;
+  fs.readFile(getPath(boardId), "utf-8", async (error, boardData) => {
+    if (error) {
+      respondWithInvalidBoardId(res, error);
+    }
+    const board = getBoardWithoutId(boardData);
+
+    res.setHeader("Content-disposition", "attachment; filename=template.json");
+    res.setHeader("Content-type", "application/json");
+    res.write(board, () => {
+      res.end();
+    });
+  });
+});
+
 router.get("/validate/:boardId", async (req, res) => {
   const boardId = req.params.boardId;
   fs.readFile(getPath(boardId), "utf-8", (error) => {
@@ -39,7 +76,7 @@ router.get("/validate/:boardId", async (req, res) => {
   });
 });
 
-router.get("/export/:boardId", async (req, res) => {
+router.get("/board-export/:boardId", async (req, res) => {
   const boardId = req.params.boardId;
   fs.readFile(getPath(boardId), "utf-8", async (error) => {
     if (error) {
