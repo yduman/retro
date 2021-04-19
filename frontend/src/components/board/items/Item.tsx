@@ -13,7 +13,7 @@ type ItemProps = {
 
 function Item(props: ItemProps) {
   const { item, index, isVoted } = props;
-  const { id, author, content, points, isBlurred } = item;
+  const { id, author, content, points, isBlurred, isDiscussed} = item;
 
   return (
     <Draggable draggableId={id} index={index}>
@@ -30,6 +30,7 @@ function Item(props: ItemProps) {
             points={points}
             isBlurred={isBlurred}
             isVoted={isVoted}
+            isDiscussed={isDiscussed}
           />
         </ItemContainer>
       )}

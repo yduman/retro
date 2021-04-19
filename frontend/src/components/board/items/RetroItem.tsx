@@ -14,6 +14,7 @@ import {
 } from "@material-ui/core";
 
 import DeleteItemButton from "./DeleteItemButton";
+import MarkAsDiscussedButton from "./MarkAsDiscussedButton";
 import EditItemButton from "./EditItemButton";
 import UpvoteItemButton from "./UpvoteItemButton";
 import { UserContext } from "../../../context/UserContext";
@@ -39,6 +40,7 @@ type RetroItemProps = {
   points: number;
   isBlurred: boolean;
   isVoted: boolean;
+  isDiscussed: boolean;
 };
 
 const getCardBorderColor = (colorTheme: Theme, theme: Theme) => {
@@ -60,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   },
   actions: {
     display: "flex",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
   },
   card: (colorTheme: Theme) => ({
     border: `1px solid ${getCardBorderColor(colorTheme, theme)}`,
@@ -80,10 +82,25 @@ const useStyles = makeStyles((theme) => ({
   likeButton: {
     marginLeft: "auto",
   },
+  discussedBadge: {
+    backgroundColor: theme.palette.primary.light,
+    color: theme.palette.secondary.main,
+    borderRadius: "25px",
+    padding: "2px 20px",
+    margin: "0px 10px",
+  },
 }));
 
 function RetroItem(props: RetroItemProps) {
-  const { id, author, content, points, isBlurred, isVoted } = props;
+  const {
+    id,
+    author,
+    content,
+    points,
+    isBlurred,
+    isVoted,
+    isDiscussed,
+  } = props;
   const [blurStatus, setBlurStatus] = useState(isBlurred);
   const [hasMouseFocus, setMouseFocus] = useState(false);
   const { boardId, boardState, socket } = useContext(BoardContext);
@@ -176,19 +193,27 @@ function RetroItem(props: RetroItemProps) {
             </Typography>
           </CardContent>
           <CardActions disableSpacing className={classes.actions}>
-            <UpvoteItemButton id={id} />
-            {isVoted ? (
-              <IconButton
-                className={classes.downVoteButton}
-                size="small"
-                color="inherit"
-                onClick={downVote}
-              >
-                <ThumbDownIcon fontSize="small" />
-              </IconButton>
-            ) : null}
-            <EditItemButton id={id} author={author} content={content} />
-            <DeleteItemButton id={id} />
+            <div>
+              {isDiscussed ? (
+                <div className={classes.discussedBadge}>Discussed</div>
+              ) : null}
+            </div>
+            <div>
+              <UpvoteItemButton id={id} />
+              {isVoted ? (
+                <IconButton
+                  className={classes.downVoteButton}
+                  size="small"
+                  color="inherit"
+                  onClick={downVote}
+                >
+                  <ThumbDownIcon fontSize="small" />
+                </IconButton>
+              ) : null}
+              <EditItemButton id={id} author={author} content={content} />
+              <MarkAsDiscussedButton id={id} />
+              <DeleteItemButton id={id} />
+            </div>
           </CardActions>
         </Card>
       </CardContainer>

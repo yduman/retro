@@ -24,6 +24,7 @@ import {
   voteCard,
   focusCard,
   removeFocusCard,
+  markAsDiscussedCard,
 } from "./card-events";
 import {
   joinPoker,
@@ -59,6 +60,7 @@ export function cardEvents(io: Server, client: Socket, roomId: string): void {
   createCard(io, client, roomId);
   editCard(io, client, roomId);
   deleteCard(io, client, roomId);
+  markAsDiscussedCard(io, client, roomId);
   voteCard(io, client, roomId);
   focusCard(io, client, roomId);
   removeFocusCard(io, client, roomId);

@@ -4,4 +4,5 @@ export type RetroItem = {
   content: string;
   points: number;
   isBlurred: boolean;
+  isDiscussed: boolean;
 };

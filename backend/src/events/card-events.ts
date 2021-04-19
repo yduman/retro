@@ -15,6 +15,7 @@ import {
   REMOVE_FOCUS_CARD,
   UPDATE_BOARD,
   BOARD_ERROR,
+  MARK_CARD_DISCUSSED,
 } from "./event-names";
 
 const UTF8 = "utf8";
@@ -39,7 +40,7 @@ export function createCard(io: Server, client: Socket, roomId: string): void {
           board.items[card.id] = card;
           board.columns[columnId].itemIds.push(card.id);
 
-          fs.writeFile(path, stringify(board), UTF8, (error) => {
+          fs.writeFile(path, stringify(board), UTF8, error => {
             if (error) logError(CREATE_CARD, error);
             io.to(roomId).emit(UPDATE_BOARD, board);
           });
@@ -60,9 +61,9 @@ export function deleteCard(io: Server, client: Socket, roomId: string): void {
         client.emit(BOARD_ERROR);
       } else {
         unset(board.items, cardId);
-        forIn(board.columns, (col) => pull(col.itemIds, cardId));
+        forIn(board.columns, col => pull(col.itemIds, cardId));
 
-        fs.writeFile(path, stringify(board), UTF8, (error) => {
+        fs.writeFile(path, stringify(board), UTF8, error => {
           if (error) logError(DELETE_CARD, error);
           io.to(roomId).emit(UPDATE_BOARD, board);
         });
@@ -88,7 +89,7 @@ export function editCard(io: Server, client: Socket, roomId: string): void {
           card.author = author.trim();
           card.content = content.trim();
 
-          fs.writeFile(path, stringify(board), UTF8, (error) => {
+          fs.writeFile(path, stringify(board), UTF8, error => {
             if (error) logError(EDIT_CARD, error);
             io.to(roomId).emit(UPDATE_BOARD, board);
           });
@@ -111,8 +112,35 @@ export function voteCard(io: Server, client: Socket, roomId: string): void {
         if (isUpvote) board.items[cardId].points += 1;
         else board.items[cardId].points -= 1;
 
-        fs.writeFile(path, stringify(board), UTF8, (error) => {
+        fs.writeFile(path, stringify(board), UTF8, error => {
           if (error) logError(VOTE_CARD, error);
+          io.to(roomId).emit(UPDATE_BOARD, board);
+        });
+      }
+    });
+  });
+}
+
+export function markAsDiscussedCard(
+  io: Server,
+  client: Socket,
+  roomId: string
+): void {
+  client.on(MARK_CARD_DISCUSSED, (cardId: string, boardId: string) => {
+    const path = getPath(boardId);
+    fs.readFile(path, UTF8, (error, file: string) => {
+      if (error) logError(MARK_CARD_DISCUSSED, error);
+      const board = getRetroBoard(file);
+
+      if (board === null) {
+        client.emit(BOARD_ERROR);
+      } else {
+        const card = board.items[cardId];
+
+        card.isDiscussed = !card.isDiscussed;
+
+        fs.writeFile(path, stringify(board), UTF8, error => {
+          if (error) logError(MARK_CARD_DISCUSSED, error);
           io.to(roomId).emit(UPDATE_BOARD, board);
         });
       }

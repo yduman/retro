@@ -4,6 +4,7 @@ export interface RetroCard {
   content: string;
   points: number;
   isBlurred: boolean;
+  isDiscussed: boolean;
 }
 
 export interface RetroColumn {

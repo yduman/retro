@@ -23,6 +23,7 @@ export const SHOW_CONTINUE_DISCUSSION = "show continue discussion";
 export const CONTINUE_DISCUSSION_YES = "continue discussion yes";
 export const CONTINUE_DISCUSSION_NO = "continue discussion no";
 export const CONTINUE_DISCUSSION_ABSTAIN = "continue discussion abstain";
+export const MARK_CARD_DISCUSSED ="mark card as discussed"
 
 // PLANNING POKER RELATED
 export const JOIN_POKER = "join poker";
